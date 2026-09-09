@@ -94,4 +94,4 @@ profitability upside.
 
    ---
 
-*Built by Uday Garg — submitted as a portfolio project for Imarticus Learning's PG Program in Data Science & Analytics.*
+Built by Uday Garg — submitted as a portfolio project for Imarticus Learning's PG Program in Data Science & Analytics.

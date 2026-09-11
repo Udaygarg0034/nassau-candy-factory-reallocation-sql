@@ -2,56 +2,49 @@
 
 ```mermaid
 erDiagram
-    FACTORIES ||--o{ PRODUCTS : "manufactures"
-    FACTORIES ||--o{ ORDERS : "ships from"
-    PRODUCTS ||--o{ ORDERS : "ordered as"
+    factories ||--o{ product_factory_map : "manufactures"
+    product_factory_map ||--o{ orders : "product maps to factory"
 
-    FACTORIES {
+    factories {
         int factory_id PK
         varchar factory_name UK
         decimal latitude
         decimal longitude
     }
 
-    PRODUCTS {
-        varchar product_id PK
+    product_factory_map {
+        varchar product_name PK
         varchar division
-        varchar product_name
-        varchar current_factory FK
+        varchar factory_name FK
     }
 
-    ORDERS {
+    orders {
         int row_id PK
-        varchar order_id
-        date order_date
-        date ship_date
-        varchar ship_mode
-        varchar customer_id
-        varchar country_region
-        varchar city
-        varchar state_province
-        varchar postal_code
-        varchar division
-        varchar region
-        varchar product_id FK
-        varchar product_name
-        varchar factory FK
-        decimal sales
+        text order_id
+        text order_date
+        text ship_date
+        text ship_mode
+        int customer_id
+        text country_region
+        text city
+        text state_province
+        int postal_code
+        text division
+        text region
+        text product_id
+        text product_name FK
+        double sales
         int units
-        decimal cost
-        decimal gross_profit
-        int lead_time_days
-        decimal distance_miles
+        double gross_profit
+        double cost
     }
 ```
 
 **Design notes**
-- `orders` is the fact table (one row per order line item, ~9,100 rows / 4,500 orders).
-- `products` and `factories` are dimension tables; `products.current_factory` captures the
-  static "as-is" assignment described in the business problem.
-- `lead_time_days` and `distance_miles` are derived columns computed at load time
-  (ship_date − order_date; haversine distance from factory to customer region) — this
-  is what makes the regression / simulation queries possible without extra joins.
-- The optimization engine (`03_optimization_engine.sql`) adds two supporting objects:
-  `region_centroids` (reference table) and `vw_factory_region_distance` (a view that
-  computes the full factory × region distance matrix used for "what-if" scenarios).
+- `orders` is the fact table (9,994 rows) — the real Nassau Candy dataset,
+  imported via MySQL Workbench's Table Data Import Wizard.
+- `factories` and `product_factory_map` are reference tables built manually
+  from the business brief, since factory and product-to-factory mapping
+  data don't exist in the source CSV.
+- `Ship Date` is present in `orders` but excluded from analysis — see the
+  Data Quality Note in the README for why.

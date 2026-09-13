@@ -25,15 +25,15 @@ order dataset and answers a series of business questions using SQL.
 ---
 
 ## 📁 Project Structure
-nassau-candy-sql-project/
-├── README.md
-├── data/
-│ └── Nassau_Candy_Distributor.csv
-├── sql/
-│ └── Nassau_Candy_Distributor_Project.sql
-└── docs/
-└── ERD.md
 
+    nassau-candy-sql-project/
+    ├── README.md
+    ├── data/
+    │   └── Nassau_Candy_Distributor.csv
+    ├── sql/
+    │   └── Nassau_Candy_Distributor_Project.sql
+    └── docs/
+        └── ERD.md
 
 ---
 
